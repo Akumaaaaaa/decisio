@@ -439,7 +439,7 @@ export function renderBreakdownTable(state, scores) {
         return `
           <td class="breakdown-cell ${winner}">
             ${raw
-              ? `<span class="score-pill score-pill--${lvl}">${raw}</span><small style="color:var(--color-text-muted);margin-left:5px">(${(weighted ?? 0).toFixed(0)})</small>`
+              ? `<span class="score-pill score-pill--${lvl}">${esc(raw)}</span><small style="color:var(--color-text-muted);margin-left:5px">(${(weighted ?? 0).toFixed(0)})</small>`
               : `<span style="color:var(--color-text-muted)">—</span>`}
           </td>`;
       }).join('');
@@ -450,7 +450,7 @@ export function renderBreakdownTable(state, scores) {
             ${esc(crit.name || 'Unnamed')}
             ${crit.inverted ? `<span class="badge-inverted">↓</span>` : ''}
           </td>
-          <td class="breakdown-cell breakdown-cell--weight">×${crit.weight}</td>
+          <td class="breakdown-cell breakdown-cell--weight">×${esc(crit.weight)}</td>
           ${cells}
         </tr>`;
     }).join('');

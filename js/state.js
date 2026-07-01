@@ -6,6 +6,66 @@ function uid() {
   return Math.random().toString(36).slice(2, 9);
 }
 
+// Ids are always machine-generated via uid() (alphanumeric only). Restricting
+// externally-supplied ids to the same shape blocks HTML-attribute-breakout
+// injection (e.g. data-option-id="${id}") for any state loaded from outside
+// this module — shared links or localStorage tampered with by other code.
+function isValidId(id) {
+  return typeof id === 'string' && /^[a-z0-9]{1,20}$/i.test(id);
+}
+
+function clampWeight(w) {
+  const n = Number(w);
+  return Number.isFinite(n) ? Math.min(10, Math.max(1, n)) : 3;
+}
+
+function clampScore(v) {
+  if (v === null || v === undefined || v === '') return null;
+  const n = Number(v);
+  return Number.isFinite(n) ? Math.min(10, Math.max(1, Math.round(n))) : null;
+}
+
+// Validates and coerces an untrusted parsed-JSON blob (from a shared URL or
+// localStorage) into a well-shaped state object. Anything that doesn't fit
+// the expected shape is dropped or clamped rather than trusted as-is —
+// external state is never assigned to _state without passing through here.
+function sanitizeState(raw) {
+  if (!raw || typeof raw !== 'object') return null;
+  if (!Array.isArray(raw.options) || !Array.isArray(raw.criteria)) return null;
+
+  const options = raw.options
+    .filter(o => o && isValidId(o.id))
+    .map(o => ({ id: o.id, name: typeof o.name === 'string' ? o.name.slice(0, 60) : '' }));
+
+  const criteria = raw.criteria
+    .filter(c => c && isValidId(c.id))
+    .map(c => ({
+      id: c.id,
+      name: typeof c.name === 'string' ? c.name.slice(0, 50) : '',
+      weight: clampWeight(c.weight),
+      inverted: c.inverted === true
+    }));
+
+  if (!options.length || !criteria.length) return null;
+
+  const scores = {};
+  for (const c of criteria) {
+    scores[c.id] = {};
+    for (const o of options) {
+      scores[c.id][o.id] = clampScore(raw.scores?.[c.id]?.[o.id]);
+    }
+  }
+
+  return {
+    step: Number.isInteger(raw.step) && raw.step >= 1 && raw.step <= 5 ? raw.step : 1,
+    title: typeof raw.title === 'string' ? raw.title.slice(0, 100) : '',
+    template: typeof raw.template === 'string' ? raw.template : null,
+    options,
+    criteria,
+    scores
+  };
+}
+
 function buildInitialState() {
   const options = [
     { id: uid(), name: '' },
@@ -123,9 +183,9 @@ export function loadFromStorage() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return false;
-    const parsed = JSON.parse(raw);
-    if (parsed?.options?.length && parsed?.criteria?.length) {
-      _state = parsed;
+    const sanitized = sanitizeState(JSON.parse(raw));
+    if (sanitized) {
+      _state = sanitized;
       return true;
     }
   } catch {
@@ -150,9 +210,9 @@ export function decodeFromURL() {
   try {
     const encoded = new URLSearchParams(window.location.search).get('d');
     if (!encoded) return false;
-    const parsed = JSON.parse(decodeURIComponent(atob(encoded)));
-    if (parsed?.options?.length && parsed?.criteria?.length) {
-      _state = parsed;
+    const sanitized = sanitizeState(JSON.parse(decodeURIComponent(atob(encoded))));
+    if (sanitized) {
+      _state = sanitized;
       persist();
       return true;
     }
