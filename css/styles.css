@@ -34,6 +34,7 @@
    30.  Modal
    31.  Animations & Transitions
    32.  Print Styles
+   33.  Home / Landing Screen
 ============================================ */
 
 
@@ -2286,4 +2287,63 @@ table {
     background: none;
     border: 2px solid #000;
   }
+}
+
+
+/* ============================================
+   33. HOME / LANDING SCREEN
+============================================ */
+
+.home-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--page-padding);
+  background-color: var(--color-bg);
+}
+
+.home-screen__inner {
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.home-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.home-logo__icon {
+  color: var(--color-primary);
+}
+
+.home-logo__text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.home-screen__title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+.home-screen__desc {
+  max-width: 440px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.btn-large {
+  margin-top: 8px;
+  padding: 14px 32px;
+  font-size: 1.0625rem;
 }

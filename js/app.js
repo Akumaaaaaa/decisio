@@ -22,9 +22,14 @@ function init() {
   bindStep2();
   bindStep3();
   bindStep5();
+  bindHome(startStep);
 
-  UI.navigateToStep(startStep);
-  renderStep(startStep);
+  // Shared links skip the landing screen and jump straight to the results
+  if (fromURL) {
+    enterApp();
+    UI.navigateToStep(startStep);
+    renderStep(startStep);
+  }
 
   // Resize: switch matrix/cards layout
   let resizeTimer;
@@ -34,6 +39,24 @@ function init() {
       if (State.getState().step === 4) renderStep4();
     }, 180);
   });
+}
+
+// ── Home / landing screen ─────────────────────────
+
+function bindHome(startStep) {
+  document.getElementById('btn-start')?.addEventListener('click', () => {
+    enterApp();
+    UI.navigateToStep(startStep);
+    renderStep(startStep);
+  });
+}
+
+function enterApp() {
+  document.getElementById('home-screen')?.setAttribute('hidden', '');
+  document.querySelector('.app-header')?.removeAttribute('hidden');
+  document.querySelector('.progress-nav')?.removeAttribute('hidden');
+  document.getElementById('wizard')?.removeAttribute('hidden');
+  document.querySelector('.wizard-nav')?.removeAttribute('hidden');
 }
 
 // ── Theme ─────────────────────────────────────────

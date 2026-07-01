@@ -4,7 +4,7 @@ A browser-based decision-making tool that helps you think through complex choice
 
 No accounts. No servers. No dependencies. Just open the file and decide.
 
-🔗 **[Live Demo](https://decisio.vercel.app)** — replace with your actual Vercel URL once deployed.
+🔗 **[Live Demo](https://decisio-mal.vercel.app)** — replace with your actual Vercel URL once deployed.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Akumaaaaaa/decisio)
 
@@ -93,6 +93,7 @@ Then visit `http://localhost:8080`.
 
 ## Usage
 
+0. **Home** — Land on the intro screen and click **Start** to enter the wizard.
 1. **Setup** — Enter a decision title and optionally pick a template.
 2. **Options** — Add 2–5 choices you are comparing.
 3. **Criteria** — Define what matters. Set a weight (1–5) per criterion. Toggle "Lower is better" for inverted scales (cost, risk, etc.).
