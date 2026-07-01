@@ -1,0 +1,2289 @@
+/* ============================================
+   DECISION SIMULATOR — styles.css
+
+   Table of Contents:
+    1.  Reset & Base
+    2.  Design Tokens
+    3.  Dark Mode Overrides
+    4.  Accessibility Utilities
+    5.  Layout Shell
+    6.  App Header
+    7.  Progress Navigation
+    8.  Wizard & Steps
+    9.  Form Fields
+   10.  Template Picker
+   11.  Option & Criteria Lists
+   12.  Weight Pips
+   13.  Toggle Switch
+   14.  Info Box
+   15.  Scoring Matrix (Desktop)
+   16.  Scoring Cards (Mobile)
+   17.  Score Input & Track
+   18.  Score Legend & Progress
+   19.  Results — Winner Banner
+   20.  Results — Charts
+   21.  Results — Breakdown Table
+   22.  Results — Pros & Cons
+   23.  Results — Sensitivity
+   24.  Results — Insights
+   25.  Results — Actions
+   26.  Buttons
+   27.  Badges & Tags
+   28.  Wizard Nav Footer
+   29.  Toast Notification
+   30.  Modal
+   31.  Animations & Transitions
+   32.  Print Styles
+============================================ */
+
+
+/* ============================================
+   1. RESET & BASE
+============================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  min-height: 100dvh;
+  transition: background-color var(--transition-slow), color var(--transition-slow);
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input {
+  font: inherit;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+
+/* ============================================
+   2. DESIGN TOKENS
+============================================ */
+
+:root {
+  /* Brand */
+  --color-primary:         #6366f1;
+  --color-primary-hover:   #4f46e5;
+  --color-primary-active:  #4338ca;
+  --color-primary-subtle:  #eef2ff;
+  --color-primary-muted:   #c7d2fe;
+
+  /* Semantic */
+  --color-success:         #10b981;
+  --color-success-subtle:  #d1fae5;
+  --color-warning:         #f59e0b;
+  --color-warning-subtle:  #fef3c7;
+  --color-danger:          #ef4444;
+  --color-danger-hover:    #dc2626;
+  --color-danger-subtle:   #fee2e2;
+
+  /* Score colors */
+  --color-score-low:       #ef4444;
+  --color-score-low-bg:    #fee2e2;
+  --color-score-mid:       #f59e0b;
+  --color-score-mid-bg:    #fef3c7;
+  --color-score-high:      #10b981;
+  --color-score-high-bg:   #d1fae5;
+
+  /* Neutrals */
+  --color-bg:              #ffffff;
+  --color-bg-subtle:       #f8fafc;
+  --color-bg-muted:        #f1f5f9;
+  --color-surface:         #ffffff;
+  --color-surface-raised:  #ffffff;
+  --color-border:          #e2e8f0;
+  --color-border-strong:   #cbd5e1;
+
+  /* Text */
+  --color-text:            #0f172a;
+  --color-text-secondary:  #475569;
+  --color-text-muted:      #94a3b8;
+  --color-text-inverse:    #ffffff;
+
+  /* Radius */
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   14px;
+  --radius-xl:   20px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-xs:  0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm:  0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+  --shadow-md:  0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.04);
+  --shadow-lg:  0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.03);
+  --shadow-xl:  0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.03);
+
+  /* Transitions */
+  --transition:       150ms ease;
+  --transition-slow:  300ms ease;
+
+  /* Layout */
+  --header-height:    60px;
+  --progress-height:  68px;
+  --wizard-nav-height: 68px;
+  --content-max:      680px;
+  --content-wide-max: 960px;
+  --page-padding:     clamp(16px, 4vw, 32px);
+
+  /* Focus ring */
+  --focus-ring: 0 0 0 3px rgb(99 102 241 / 0.35);
+}
+
+
+/* ============================================
+   3. DARK MODE OVERRIDES
+============================================ */
+
+[data-theme="dark"] {
+  --color-primary:         #818cf8;
+  --color-primary-hover:   #a5b4fc;
+  --color-primary-active:  #c7d2fe;
+  --color-primary-subtle:  #1e1b4b;
+  --color-primary-muted:   #312e81;
+
+  --color-success:         #34d399;
+  --color-success-subtle:  #064e3b;
+  --color-warning:         #fbbf24;
+  --color-warning-subtle:  #451a03;
+  --color-danger:          #f87171;
+  --color-danger-hover:    #fca5a5;
+  --color-danger-subtle:   #450a0a;
+
+  --color-score-low:       #f87171;
+  --color-score-low-bg:    #450a0a;
+  --color-score-mid:       #fbbf24;
+  --color-score-mid-bg:    #451a03;
+  --color-score-high:      #34d399;
+  --color-score-high-bg:   #064e3b;
+
+  --color-bg:              #0f172a;
+  --color-bg-subtle:       #1e293b;
+  --color-bg-muted:        #334155;
+  --color-surface:         #1e293b;
+  --color-surface-raised:  #263244;
+  --color-border:          #334155;
+  --color-border-strong:   #475569;
+
+  --color-text:            #f1f5f9;
+  --color-text-secondary:  #94a3b8;
+  --color-text-muted:      #64748b;
+  --color-text-inverse:    #0f172a;
+
+  --shadow-xs:  0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-sm:  0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.2);
+  --shadow-md:  0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+  --shadow-lg:  0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+  --shadow-xl:  0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.2);
+
+  --focus-ring: 0 0 0 3px rgb(129 140 248 / 0.4);
+}
+
+/* Dark mode icon toggling */
+[data-theme="light"] .icon-sun { display: none; }
+[data-theme="dark"]  .icon-moon { display: none; }
+
+
+/* ============================================
+   4. ACCESSIBILITY UTILITIES
+============================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* ============================================
+   5. LAYOUT SHELL
+============================================ */
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-height);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-xs);
+  transition: background-color var(--transition-slow), border-color var(--transition-slow);
+}
+
+.progress-nav {
+  position: sticky;
+  top: var(--header-height);
+  z-index: 90;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color var(--transition-slow), border-color var(--transition-slow);
+}
+
+.wizard {
+  min-height: calc(100dvh - var(--header-height) - var(--progress-height) - var(--wizard-nav-height));
+  padding: clamp(24px, 5vw, 48px) var(--page-padding);
+  padding-bottom: calc(clamp(24px, 5vw, 48px) + 16px);
+}
+
+.wizard-nav {
+  position: sticky;
+  bottom: 0;
+  z-index: 90;
+  height: var(--wizard-nav-height);
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -4px 12px rgb(0 0 0 / 0.06);
+  transition: background-color var(--transition-slow), border-color var(--transition-slow);
+}
+
+
+/* ============================================
+   6. APP HEADER
+============================================ */
+
+.app-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--content-wide-max);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--page-padding);
+}
+
+.app-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.app-logo__icon {
+  flex-shrink: 0;
+  color: var(--color-primary);
+  transition: color var(--transition-slow);
+}
+
+.app-logo__text {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  transition: color var(--transition-slow);
+}
+
+.app-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+/* ============================================
+   7. PROGRESS NAVIGATION
+============================================ */
+
+.progress-nav__inner {
+  max-width: var(--content-wide-max);
+  margin: 0 auto;
+  padding: 0 var(--page-padding);
+}
+
+.progress-steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0 8px;
+  gap: 4px;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  position: relative;
+  cursor: default;
+}
+
+/* Connector line between steps */
+.progress-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: calc(50% + 16px);
+  width: calc(100% - 32px);
+  height: 2px;
+  background-color: var(--color-border);
+  transition: background-color var(--transition-slow);
+  z-index: 0;
+}
+
+.progress-step.is-complete:not(:last-child)::after {
+  background-color: var(--color-primary);
+}
+
+.progress-step__bubble {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: var(--color-bg-muted);
+  color: var(--color-text-muted);
+  border: 2px solid var(--color-border);
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.progress-step.is-active .progress-step__bubble {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-subtle);
+}
+
+.progress-step.is-complete .progress-step__bubble {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
+}
+
+/* Checkmark for complete steps */
+.progress-step.is-complete .progress-step__bubble::after {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 6px;
+  border-left: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg) translate(1px, -1px);
+  font-size: 0;
+  line-height: 0;
+}
+
+.progress-step.is-complete .progress-step__bubble {
+  font-size: 0;
+  line-height: 0;
+}
+
+.progress-step__label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  transition: color var(--transition);
+  white-space: nowrap;
+}
+
+.progress-step.is-active .progress-step__label {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.progress-step.is-complete .progress-step__label {
+  color: var(--color-text-secondary);
+}
+
+.progress-track {
+  height: 3px;
+  background-color: var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-hover));
+  border-radius: var(--radius-full);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 480px) {
+  .progress-step__label {
+    display: none;
+  }
+
+  .progress-steps {
+    padding: 14px 0 10px;
+  }
+}
+
+
+/* ============================================
+   8. WIZARD & STEPS
+============================================ */
+
+.wizard-step {
+  animation: stepFadeIn 0.25s ease forwards;
+}
+
+.step-content {
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+
+.step-content--wide {
+  max-width: var(--content-wide-max);
+}
+
+.step-header {
+  margin-bottom: 32px;
+}
+
+.step-title {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.step-desc {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+
+/* ============================================
+   9. FORM FIELDS
+============================================ */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 28px;
+}
+
+.field__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.field__required {
+  color: var(--color-danger);
+  margin-left: 2px;
+}
+
+.field__input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background-color var(--transition-slow);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.field__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.field__input:hover {
+  border-color: var(--color-border-strong);
+}
+
+.field__input:focus {
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.field__input.is-invalid {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px rgb(239 68 68 / 0.2);
+}
+
+.field__hint {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.field__error {
+  font-size: 0.8125rem;
+  color: var(--color-danger);
+  font-weight: 500;
+}
+
+
+/* ============================================
+   10. TEMPLATE PICKER
+============================================ */
+
+.template-picker {
+  margin-top: 8px;
+}
+
+.template-picker__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.template-picker__title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.template-picker__hint {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  margin-bottom: 16px;
+}
+
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+@media (min-width: 560px) {
+  .template-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.template-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 14px;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--transition),
+    background-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.template-card:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-subtle);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.template-card:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.template-card.is-selected {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-subtle);
+  box-shadow: 0 0 0 3px var(--color-primary-muted);
+}
+
+.template-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-muted);
+  color: var(--color-primary);
+  transition: background-color var(--transition);
+}
+
+.template-card:hover .template-card__icon,
+.template-card.is-selected .template-card__icon {
+  background-color: var(--color-primary-muted);
+}
+
+.template-card__name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.template-card__desc {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.template-card--custom .template-card__icon {
+  color: var(--color-text-muted);
+}
+
+
+/* ============================================
+   11. OPTION & CRITERIA LISTS
+============================================ */
+
+.option-list,
+.criteria-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+/* ── Option Row ── */
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  animation: rowSlideIn 0.15s ease;
+}
+
+.option-row__drag {
+  display: flex;
+  align-items: center;
+  color: var(--color-text-muted);
+  cursor: grab;
+  padding: 4px 2px;
+  flex-shrink: 0;
+  opacity: 0.5;
+  transition: opacity var(--transition);
+}
+
+.option-row:hover .option-row__drag {
+  opacity: 1;
+}
+
+.option-row__field {
+  flex: 1;
+}
+
+.option-row__field .field__input {
+  margin: 0;
+}
+
+/* ── Criteria Columns Header ── */
+.criteria-columns {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 0 0 8px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 8px;
+}
+
+@media (min-width: 640px) {
+  .criteria-columns {
+    display: flex;
+  }
+}
+
+.criteria-col {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.criteria-col--name   { flex: 1; min-width: 0; }
+.criteria-col--weight { width: 160px; flex-shrink: 0; }
+.criteria-col--invert { width: 100px; flex-shrink: 0; text-align: center; }
+.criteria-col--action { width: 36px; flex-shrink: 0; }
+
+/* ── Criterion Row ── */
+.criterion-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  animation: rowSlideIn 0.15s ease;
+  transition:
+    border-color var(--transition),
+    background-color var(--transition-slow);
+}
+
+.criterion-row:hover {
+  border-color: var(--color-border-strong);
+}
+
+.criterion-row__name {
+  flex: 1;
+  min-width: 0;
+}
+
+.criterion-row__name .field__input {
+  border: none;
+  background: transparent;
+  padding: 4px 0;
+  font-weight: 500;
+  box-shadow: none !important;
+}
+
+.criterion-row__name .field__input:focus {
+  outline: none;
+  border-bottom: 1.5px solid var(--color-primary);
+}
+
+.criterion-row__weight {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  width: 160px;
+}
+
+.criterion-row__invert {
+  display: flex;
+  justify-content: center;
+  width: 100px;
+  flex-shrink: 0;
+}
+
+/* Mobile: stack criterion row */
+@media (max-width: 639px) {
+  .criterion-row {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .criterion-row__name {
+    flex: 1 1 100%;
+  }
+
+  .criterion-row__name .field__input {
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 8px 10px;
+    background-color: var(--color-bg-subtle);
+  }
+
+  .criterion-row__weight {
+    width: auto;
+  }
+
+  .criterion-row__invert {
+    width: auto;
+    margin-left: auto;
+  }
+}
+
+/* ── Add / Footer ── */
+.list-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.list-footer__hint {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+
+/* ============================================
+   12. WEIGHT PIPS
+============================================ */
+
+.weight-pip {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border);
+  background-color: transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.weight-pip:hover {
+  border-color: var(--color-primary);
+  transform: scale(1.15);
+}
+
+.weight-pip.is-active {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.weight-value {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  min-width: 16px;
+  margin-left: 4px;
+  user-select: none;
+}
+
+
+/* ============================================
+   13. TOGGLE SWITCH
+============================================ */
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.toggle__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.toggle__track {
+  position: relative;
+  display: block;
+  width: 38px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-muted);
+  border: 1.5px solid var(--color-border);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+  flex-shrink: 0;
+}
+
+.toggle__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-text-muted);
+  transition: transform var(--transition), background-color var(--transition);
+  box-shadow: var(--shadow-xs);
+}
+
+.toggle__input:checked + .toggle__track {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.toggle__input:checked + .toggle__track .toggle__thumb {
+  transform: translateX(16px);
+  background-color: #fff;
+}
+
+.toggle__input:focus-visible + .toggle__track {
+  box-shadow: var(--focus-ring);
+}
+
+
+/* ============================================
+   14. INFO BOX
+============================================ */
+
+.info-box {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+  background-color: var(--color-primary-subtle);
+  border: 1px solid var(--color-primary-muted);
+  border-radius: var(--radius-md);
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-top: 20px;
+}
+
+.info-box--compact {
+  margin-top: 12px;
+  padding: 10px 12px;
+}
+
+.info-box__icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--color-primary);
+}
+
+.info-box strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+
+/* ============================================
+   15. SCORING MATRIX (DESKTOP)
+============================================ */
+
+.matrix-scroll {
+  overflow-x: auto;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scoring-matrix {
+  min-width: 480px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.875rem;
+}
+
+/* Header row */
+.scoring-matrix thead {
+  background-color: var(--color-bg-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.scoring-matrix thead tr {
+  border-bottom: 2px solid var(--color-border);
+}
+
+.matrix-cell {
+  padding: 12px 16px;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color var(--transition-slow);
+}
+
+.matrix-cell--header {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: center;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.matrix-cell--criterion {
+  text-align: left;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: var(--color-bg-subtle);
+  min-width: 160px;
+  max-width: 220px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  letter-spacing: 0;
+}
+
+.matrix-weight-note {
+  display: block;
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+  margin-top: 1px;
+}
+
+.matrix-row:nth-child(even) .matrix-cell {
+  background-color: var(--color-bg-subtle);
+}
+
+.matrix-row:nth-child(even) .matrix-cell--criterion {
+  background-color: var(--color-bg-subtle);
+}
+
+.matrix-row:nth-child(odd) .matrix-cell--criterion {
+  background-color: var(--color-surface);
+}
+
+.matrix-cell--criterion-label {
+  text-align: left;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  padding: 10px 16px;
+}
+
+.matrix-criterion-name {
+  display: block;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+
+.matrix-criterion-weight {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.badge-inverted {
+  display: inline-block;
+  font-size: 0.6875rem;
+  color: var(--color-warning);
+  background-color: var(--color-warning-subtle);
+  border-radius: var(--radius-full);
+  padding: 1px 6px;
+  font-weight: 600;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+/* Total row */
+.matrix-total-row {
+  background-color: var(--color-bg-muted);
+}
+
+.matrix-total-row .matrix-cell {
+  border-top: 2px solid var(--color-border);
+  border-bottom: none;
+  font-weight: 700;
+}
+
+.matrix-cell--total-label {
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  color: var(--color-text);
+  position: sticky;
+  left: 0;
+  background-color: var(--color-bg-muted);
+}
+
+/* Option column highlighting on hover */
+.matrix-col-hover {
+  background-color: var(--color-primary-subtle) !important;
+}
+
+
+/* ============================================
+   16. SCORING CARDS (MOBILE)
+============================================ */
+
+.scoring-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.scoring-card {
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-surface);
+}
+
+.scoring-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 14px;
+  background-color: var(--color-bg-subtle);
+  border-bottom: 1px solid var(--color-border);
+  gap: 8px;
+}
+
+.scoring-card__name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.scoring-card__weight {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.scoring-card__options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1px;
+  background-color: var(--color-border);
+}
+
+.scoring-card__option {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  background-color: var(--color-surface);
+}
+
+.scoring-card__option label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+
+/* ============================================
+   17. SCORE INPUT & TRACK
+============================================ */
+
+.score-cell-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.score-input {
+  width: 64px;
+  padding: 7px 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    color var(--transition);
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.score-input::-webkit-inner-spin-button,
+.score-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.score-input::placeholder {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.score-input:hover {
+  border-color: var(--color-border-strong);
+}
+
+.score-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+/* Color states applied by JS via data-score attribute */
+.score-input[data-score="low"] {
+  border-color: var(--color-score-low);
+  color: var(--color-score-low);
+}
+
+.score-input[data-score="mid"] {
+  border-color: var(--color-score-mid);
+  color: var(--color-score-mid);
+}
+
+.score-input[data-score="high"] {
+  border-color: var(--color-score-high);
+  color: var(--color-score-high);
+}
+
+/* Visual bar under input */
+.score-track {
+  width: 64px;
+  height: 4px;
+  background-color: var(--color-bg-muted);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.score-track__fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+  transition: width 0.2s ease, background-color var(--transition);
+}
+
+.score-track__fill[data-score="low"]  { background-color: var(--color-score-low); }
+.score-track__fill[data-score="mid"]  { background-color: var(--color-score-mid); }
+.score-track__fill[data-score="high"] { background-color: var(--color-score-high); }
+
+
+/* ============================================
+   18. SCORE LEGEND & PROGRESS
+============================================ */
+
+.score-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.score-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+}
+
+.score-legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.score-legend__dot--low  { background-color: var(--color-score-low); }
+.score-legend__dot--mid  { background-color: var(--color-score-mid); }
+.score-legend__dot--high { background-color: var(--color-score-high); }
+
+/* Score completion progress */
+.score-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.score-progress__bar {
+  flex: 1;
+  height: 6px;
+  background-color: var(--color-bg-muted);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.score-progress__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-success));
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
+.score-progress__text {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+
+/* ============================================
+   19. RESULTS — WINNER BANNER
+============================================ */
+
+.winner-banner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: clamp(20px, 4vw, 28px) clamp(20px, 4vw, 32px);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-subtle) 0%,
+    var(--color-bg-muted) 100%
+  );
+  border: 2px solid var(--color-primary-muted);
+  border-radius: var(--radius-xl);
+  margin-bottom: 40px;
+  box-shadow: var(--shadow-md);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.winner-banner__trophy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-primary);
+  color: white;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-md);
+}
+
+.winner-banner__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.winner-banner__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-primary);
+  margin-bottom: 2px;
+}
+
+.winner-banner__name {
+  font-size: clamp(1.25rem, 3vw, 1.625rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.winner-banner__score {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.winner-banner__caveat {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  border-left: 2px solid var(--color-border);
+  padding-left: 14px;
+  max-width: 220px;
+}
+
+.winner-banner__caveat em {
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+
+/* ============================================
+   20. RESULTS — CHARTS
+============================================ */
+
+.results-section {
+  margin-bottom: 48px;
+}
+
+.results-section__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.results-section__desc {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin-bottom: 16px;
+}
+
+.chart-container {
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(16px, 3vw, 24px);
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: border-color var(--transition-slow), background-color var(--transition-slow);
+}
+
+.chart-container--radar {
+  min-height: 320px;
+}
+
+.chart-container svg {
+  width: 100%;
+  height: auto;
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 12px;
+  padding: 0 4px;
+}
+
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+}
+
+.chart-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+
+/* ============================================
+   21. RESULTS — BREAKDOWN TABLE
+============================================ */
+
+.table-scroll {
+  overflow-x: auto;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  -webkit-overflow-scrolling: touch;
+}
+
+.breakdown-table {
+  min-width: 400px;
+  font-size: 0.875rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.breakdown-cell {
+  padding: 10px 16px;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.breakdown-table thead .breakdown-cell {
+  background-color: var(--color-bg-subtle);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.breakdown-cell--criterion {
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text);
+  min-width: 150px;
+  position: sticky;
+  left: 0;
+  background-color: var(--color-surface);
+}
+
+.breakdown-table thead .breakdown-cell--criterion {
+  background-color: var(--color-bg-subtle);
+}
+
+.breakdown-cell--weight {
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}
+
+.breakdown-table tfoot .breakdown-cell {
+  font-weight: 700;
+  border-top: 2px solid var(--color-border);
+  border-bottom: none;
+  background-color: var(--color-bg-muted);
+  color: var(--color-text);
+}
+
+.breakdown-table tfoot .breakdown-cell--criterion {
+  text-align: left;
+  background-color: var(--color-bg-muted);
+}
+
+/* Winner column highlight */
+.breakdown-cell.is-winner {
+  background-color: var(--color-success-subtle);
+  font-weight: 700;
+  color: var(--color-success);
+}
+
+.breakdown-table tfoot .breakdown-cell.is-winner {
+  background-color: var(--color-success-subtle);
+  color: var(--color-success);
+}
+
+/* Score pill inside breakdown table */
+.score-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.score-pill--low  { background-color: var(--color-score-low-bg);  color: var(--color-score-low); }
+.score-pill--mid  { background-color: var(--color-score-mid-bg);  color: var(--color-score-mid); }
+.score-pill--high { background-color: var(--color-score-high-bg); color: var(--color-score-high); }
+
+
+/* ============================================
+   22. RESULTS — PROS & CONS
+============================================ */
+
+.proscons-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 600px) {
+  .proscons-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+}
+
+.proscon-card {
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.proscon-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.proscon-card.is-winner {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-subtle);
+}
+
+.proscon-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background-color: var(--color-bg-subtle);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.proscon-card__name {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.proscon-card__pct {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.proscon-card__section {
+  padding: 12px 16px;
+}
+
+.proscon-card__section + .proscon-card__section {
+  border-top: 1px solid var(--color-border);
+}
+
+.proscon-card__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 8px;
+}
+
+.proscon-card__section--pros .proscon-card__label {
+  color: var(--color-success);
+}
+
+.proscon-card__section--cons .proscon-card__label {
+  color: var(--color-danger);
+}
+
+.proscon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.proscon-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.proscon-list li::before {
+  flex-shrink: 0;
+  margin-top: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+  content: "";
+  display: block;
+}
+
+.proscon-card__section--pros .proscon-list li { color: var(--color-success); }
+.proscon-card__section--cons .proscon-list li { color: var(--color-danger); }
+
+.proscon-empty {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+
+/* ============================================
+   23. RESULTS — SENSITIVITY ANALYSIS
+============================================ */
+
+.sensitivity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.sensitivity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition);
+}
+
+.sensitivity-item:hover {
+  border-color: var(--color-border-strong);
+}
+
+.sensitivity-item__name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.sensitivity-item__bar {
+  flex: 1;
+  height: 6px;
+  background-color: var(--color-bg-muted);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.sensitivity-item__fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+  transition: width 0.5s ease;
+}
+
+.sensitivity-item__tag {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.sensitivity-item__tag--stable {
+  background-color: var(--color-success-subtle);
+  color: var(--color-success);
+}
+
+.sensitivity-item__tag--pivotal {
+  background-color: var(--color-warning-subtle);
+  color: var(--color-warning);
+}
+
+@media (max-width: 480px) {
+  .sensitivity-item {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sensitivity-item__bar {
+    order: 3;
+    flex-basis: 100%;
+  }
+}
+
+
+/* ============================================
+   24. RESULTS — INSIGHTS
+============================================ */
+
+.insights-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.insight-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  border-left: 3px solid;
+}
+
+.insight-item--info {
+  background-color: var(--color-primary-subtle);
+  border-color: var(--color-primary);
+  color: var(--color-text-secondary);
+}
+
+.insight-item--success {
+  background-color: var(--color-success-subtle);
+  border-color: var(--color-success);
+  color: var(--color-text-secondary);
+}
+
+.insight-item--warning {
+  background-color: var(--color-warning-subtle);
+  border-color: var(--color-warning);
+  color: var(--color-text-secondary);
+}
+
+.insight-item__icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+}
+
+.insight-item--info    .insight-item__icon { color: var(--color-primary); }
+.insight-item--success .insight-item__icon { color: var(--color-success); }
+.insight-item--warning .insight-item__icon { color: var(--color-warning); }
+
+.insight-item strong {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+
+/* ============================================
+   25. RESULTS — ACTIONS
+============================================ */
+
+.results-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 1px solid var(--color-border);
+}
+
+.share-feedback {
+  font-size: 0.8125rem;
+  color: var(--color-success);
+  font-weight: 600;
+  margin-top: 8px;
+  animation: fadeIn 0.2s ease;
+}
+
+
+/* ============================================
+   26. BUTTONS
+============================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 20px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition),
+    opacity var(--transition);
+  white-space: nowrap;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Primary */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
+  box-shadow: 0 1px 3px rgb(99 102 241 / 0.25);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  box-shadow: 0 4px 12px rgb(99 102 241 / 0.3);
+}
+
+.btn-primary:active {
+  background-color: var(--color-primary-active);
+}
+
+/* Secondary (outlined) */
+.btn-secondary {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-xs);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-border-strong);
+  background-color: var(--color-bg-subtle);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Ghost */
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border-color: transparent;
+}
+
+.btn-ghost:hover {
+  background-color: var(--color-bg-muted);
+  color: var(--color-text);
+}
+
+/* Danger */
+.btn-danger {
+  background-color: var(--color-danger);
+  color: white;
+  border-color: var(--color-danger);
+}
+
+.btn-danger:hover {
+  background-color: var(--color-danger-hover);
+  border-color: var(--color-danger-hover);
+}
+
+/* Icon button */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  background-color: transparent;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
+  flex-shrink: 0;
+}
+
+.btn-icon:hover {
+  background-color: var(--color-bg-muted);
+  color: var(--color-text);
+}
+
+.btn-icon:active {
+  transform: scale(0.9);
+}
+
+.btn-icon--remove:hover {
+  background-color: var(--color-danger-subtle);
+  color: var(--color-danger);
+}
+
+.btn-icon:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Add button (dashed) */
+.btn-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  background-color: var(--color-primary-subtle);
+  border: 1.5px dashed var(--color-primary-muted);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    transform var(--transition);
+}
+
+.btn-add:hover {
+  background-color: var(--color-primary-muted);
+  border-style: solid;
+  border-color: var(--color-primary);
+}
+
+.btn-add:active {
+  transform: scale(0.97);
+}
+
+.btn-add:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+
+/* ============================================
+   27. BADGES & TAGS
+============================================ */
+
+.badge-optional {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  background-color: var(--color-bg-muted);
+  border-radius: var(--radius-full);
+  padding: 2px 8px;
+}
+
+
+/* ============================================
+   28. WIZARD NAV FOOTER
+============================================ */
+
+.wizard-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--content-wide-max);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--page-padding);
+  gap: 16px;
+}
+
+.wizard-nav__indicator {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.wizard-nav .btn-primary {
+  padding: 10px 28px;
+}
+
+@media (max-width: 400px) {
+  .wizard-nav__indicator {
+    display: none;
+  }
+}
+
+
+/* ============================================
+   29. TOAST NOTIFICATION
+============================================ */
+
+.toast {
+  position: fixed;
+  bottom: calc(var(--wizard-nav-height) + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  z-index: 200;
+  white-space: nowrap;
+  max-width: calc(100vw - 32px);
+  opacity: 0;
+  animation: toastIn 0.25s ease forwards, toastOut 0.25s ease 2.5s forwards;
+  pointer-events: none;
+}
+
+.toast__icon {
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+@keyframes toastIn {
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes toastOut {
+  to { opacity: 0; transform: translateX(-50%) translateY(12px); }
+}
+
+
+/* ============================================
+   30. MODAL
+============================================ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: overlayIn 0.2s ease;
+}
+
+.modal {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: clamp(24px, 5vw, 36px);
+  max-width: 420px;
+  width: 100%;
+  box-shadow: var(--shadow-xl);
+  animation: modalIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal__title {
+  font-size: 1.1875rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin-bottom: 10px;
+}
+
+.modal__desc {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.modal__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.93) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+
+/* ============================================
+   31. ANIMATIONS & TRANSITIONS
+============================================ */
+
+@keyframes stepFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rowSlideIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+
+/* Skeleton / loading state */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-muted) 25%,
+    var(--color-border) 50%,
+    var(--color-bg-muted) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonWave 1.4s ease infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes skeletonWave {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* SVG bar chart — transitions set via JS per-element (staggered delay) */
+.ds-bar,
+.ds-bar-label {
+  will-change: width, opacity;
+}
+
+
+/* ============================================
+   32. PRINT STYLES
+============================================ */
+
+@media print {
+  .app-header,
+  .progress-nav,
+  .wizard-nav,
+  .results-actions,
+  .btn,
+  .toast,
+  .modal-overlay {
+    display: none !important;
+  }
+
+  body {
+    font-size: 12pt;
+    color: #000;
+    background: #fff;
+  }
+
+  .wizard {
+    padding: 0;
+  }
+
+  .wizard-step[id="step-5"] {
+    display: block !important;
+  }
+
+  .chart-container {
+    border: 1px solid #ccc;
+    page-break-inside: avoid;
+  }
+
+  .proscon-card,
+  .sensitivity-item,
+  .insight-item {
+    page-break-inside: avoid;
+  }
+
+  .winner-banner {
+    background: none;
+    border: 2px solid #000;
+  }
+}
