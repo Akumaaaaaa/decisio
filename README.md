@@ -127,7 +127,7 @@ Where `max possible = 10 × sum of all weights`.
 This produces a 0–100% score that is comparable across decisions with different numbers of criteria.
 
 ### 4. Sensitivity analysis
-For each criterion, its weight is temporarily doubled (capped at 10). If the winner changes, the criterion is marked **Pivotal** — a signal to re-examine that weight carefully.
+For each criterion, its weight is temporarily doubled (capped at 10) and halved (floored at 0.1) in turn. If either change flips the winner, the criterion is marked **Pivotal** — a signal to re-examine that weight carefully.
 
 ### 5. Insights
 The engine automatically flags: tight races (gap ≤ 5 pts), clear leaders (gap > 20 pts), pivotal criteria, dominant criteria (>40% of total weight), and incomplete matrices.
