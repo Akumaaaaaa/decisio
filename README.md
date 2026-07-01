@@ -4,7 +4,7 @@ A browser-based decision-making tool that helps you think through complex choice
 
 No accounts. No servers. No dependencies. Just open the file and decide.
 
-🔗 **[Live Demo](https://decisio.vercel.app)** — replace with your actual Vercel URL once deployed.
+🔗 **[Live Demo](https://decisio-mal.vercel.app)** — replace with your actual Vercel URL once deployed.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Akumaaaaaa/decisio)
 
